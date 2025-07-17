@@ -7,6 +7,7 @@ const GoalGuideView = ({
   currentQuestionIndex, setCurrentQuestionIndex,
   createGoal,
   setCurrentView,
+  setSelectedGoal,
 }) => {
   console.log("GoalGuideView rendered. guideAnswers:", guideAnswers, "currentQuestionIndex:", currentQuestionIndex);
 
@@ -61,6 +62,7 @@ const GoalGuideView = ({
         ].filter(Boolean).concat(Array(8).fill('')).slice(0, 8), // Ensure 8 subgoals
       };
       createGoal(newGoal);
+      setSelectedGoal(newGoal); // Set the newly created goal as selected
       setShowGoalGuide(false);
       setCurrentQuestionIndex(0);
       setGuideAnswers({});

@@ -7,11 +7,11 @@ const HierarchicalGoalsView = ({
   deleteYearlyGoal, deleteMonthlyGoal, deleteWeeklyGoal,
   editingItem, editText, setEditText, startEditing, saveEdit, cancelEditing,
   currentGoalLevel, setCurrentGoalLevel, setSelectedYearlyGoalId, setSelectedMonthlyGoalId,
-  setSelectedGoal, // Required for navigation to FilteredTasksView
+  selectedGoal, setSelectedGoal,
 }) => {
   const [newGoalText, setNewGoalText] = useState('');
-  // Set initial value to first goal's ID, or null if none exist
-  const [selectedGoalId, setSelectedGoalId] = useState(goals[0]?.id || null);
+  // Use selectedGoal.id from props, or null if no goal is selected
+  const selectedGoalId = selectedGoal?.id || null;
   const [selectedYearlyGoalId, setInternalSelectedYearlyGoalId] = useState(null);
   const [selectedMonthlyGoalId, setInternalSelectedMonthlyGoalId] = useState(null);
   const [selectedSubGoalIndex, setSelectedSubGoalIndex] = useState(0);
@@ -77,14 +77,14 @@ const HierarchicalGoalsView = ({
           <select
             id="longTermGoalSelect"
             value={selectedGoalId || ''}
-            onChange={(e) => setSelectedGoalId(Number(e.target.value))}
+            onChange={(e) => setSelectedGoal(goals.find(g => g.id === Number(e.target.value)) || null)}
             className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
           >
             {goals.map(goal => (
               <option key={goal.id} value={goal.id}>{goal.title}</option>
             ))}
           </select>
-          {selectedGoalId && (
+          {selectedGoal && (
             <div className="mt-3">
               <label htmlFor="subGoalSelect" className="block text-sm font-medium text-gray-700 mb-2">세부 목표 선택</label>
               <select
@@ -93,7 +93,7 @@ const HierarchicalGoalsView = ({
                 onChange={(e) => setSelectedSubGoalIndex(Number(e.target.value))}
                 className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
               >
-                {goals.find(g => g.id === selectedGoalId)?.subGoals.map((subGoal, index) => (
+                {selectedGoal.subGoals.map((subGoal, index) => (
                   <option key={index} value={index}>{subGoal}</option>
                 ))}
               </select>
