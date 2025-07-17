@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { periodOptions, guideSteps } from '../constants/appConstants';
+import { periodOptions, goalGuideQuestions } from '../constants/appConstants';
 import { getDaysInMonth, getFirstDayOfMonth } from '../utils/dateUtils';
 import {
   createGoal as utilCreateGoal, addYearlyGoal as utilAddYearlyGoal,
@@ -26,10 +26,9 @@ const useMandalartGoals = () => {
   const [selectedMonthlyGoalId, setSelectedMonthlyGoalId] = useState(null);
   const [editingItem, setEditingItem] = useState(null);
   const [editText, setEditText] = useState('');
-  const [guideStep, setGuideStep] = useState(0); // Not used but was in original code
-  const [guideAnswers, setGuideAnswers] = useState({}); // Not used but was in original code
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0); // Not used but was in original code
-  const [showGoalGuide, setShowGoalGuide] = useState(false); // Not used but was in original code
+  const [guideAnswers, setGuideAnswers] = useState({});
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [showGoalGuide, setShowGoalGuide] = useState(false);
 
   // Initialize sample data (runs once when component mounts)
   useEffect(() => {
@@ -118,14 +117,13 @@ const useMandalartGoals = () => {
     selectedMonthlyGoalId, setSelectedMonthlyGoalId,
     editingItem,
     editText, setEditText,
-    guideStep, setGuideStep,
     guideAnswers, setGuideAnswers,
     currentQuestionIndex, setCurrentQuestionIndex,
     showGoalGuide, setShowGoalGuide,
-    periodOptions, guideSteps,
+    periodOptions, goalGuideQuestions,
     // Utility functions that update state (pass setters as arguments)
-    createGoal: (goalData) => utilCreateGoal(goalData, periodOptions, setGoals, goals),
-    addYearlyGoal: (goalId, subGoalIndex, title) => utilAddYearlyGoal(goalId, subGoalIndex, title, setYearlyGoals, yearlyGoals),
+    createGoal: (goalData) => utilCreateGoal(goalData, periodOptions, setGoals, goals, setYearlyGoals, yearlyGoals, setMonthlyGoals, monthlyGoals, setWeeklyGoals, weeklyGoals, setDailyTasks, dailyTasks),
+    addYearlyGoal: (goalId, subGoalIndex, title) => utilAddYearlyGoal(goalId, subGoalIndex, title, setYearlyGoals, yearlyGoals, setMonthlyGoals, monthlyGoals, setWeeklyGoals, weeklyGoals, setDailyTasks, dailyTasks),
     addMonthlyGoal: (yearlyGoalId, title) => utilAddMonthlyGoal(yearlyGoalId, title, setMonthlyGoals, monthlyGoals),
     addWeeklyGoal: (monthlyGoalId, title) => utilAddWeeklyGoal(monthlyGoalId, title, setWeeklyGoals, weeklyGoals),
     addDailyTask: (weeklyGoalId, taskTitle) => utilAddDailyTask(weeklyGoalId, taskTitle, setDailyTasks, dailyTasks),

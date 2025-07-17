@@ -1,12 +1,18 @@
 export const periodOptions = [
-  { value: '30days', label: '30일' },
-  { value: '90days', label: '90일' },
-  { value: '180days', label: '180일' },
   { value: '365days', label: '1년' },
-  { value: '730days', label: '2년' },
-  { value: '1095days', label: '3년' },
-  { value: '1825days', label: '5년' },
-  { value: '3650days', label: '10년' }
+  { value: '180days', label: '6개월' },
+  { value: '90days', label: '3개월' },
+  { value: '30days', label: '1개월' },
+];
+
+export const goalGuideQuestions = [
+  { id: 'dream', text: '1년 후, 어떤 이상적인 모습을 꿈꾸시나요? 자유롭게 상상해보세요.', placeholder: '예: 더 건강해지고, 새로운 기술을 배우고, 의미 있는 관계를 맺고 싶어요.' },
+  { id: 'coreValue', text: '그 모습에서 가장 중요하게 생각하는 가치는 무엇인가요? (예: 성장, 건강, 행복, 안정)', placeholder: '예: 성장' },
+  { id: 'mainGoal', text: '가장 중요한 가치를 기반으로, 올해 달성하고 싶은 가장 큰 목표는 무엇인가요? 이것이 당신의 핵심 목표가 됩니다.', placeholder: '예: 꾸준한 학습으로 프론트엔드 개발 역량 강화하기' },
+  { id: 'subGoal1', text: '핵심 목표를 달성하기 위해 어떤 구체적인 목표들을 세울 수 있을까요? 첫 번째 세부 목표를 알려주세요.', placeholder: '예: 매일 1시간씩 코딩 연습하기' },
+  { id: 'subGoal2', text: '두 번째 세부 목표는 무엇인가요?', placeholder: '예: 매주 기술 블로그 아티클 1개 읽고 정리하기' },
+  { id: 'subGoal3', text: '세 번째 세부 목표는 무엇인가요?', placeholder: '예: 분기별로 사이드 프로젝트 1개 완성하기' },
+  { id: 'summary', text: '훌륭해요! 설정된 목표를 확인하고, 필요하다면 수정해주세요.' },
 ];
 
 export const guideSteps = [

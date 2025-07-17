@@ -6,7 +6,7 @@ const generateId = () => {
 };
 
 // Create new goal
-export const createGoal = (goalData, periodOptions, setGoals, goals) => {
+export const createGoal = (goalData, periodOptions, setGoals, goals, setYearlyGoals, yearlyGoals, setMonthlyGoals, monthlyGoals, setWeeklyGoals, weeklyGoals, setDailyTasks, dailyTasks) => {
   const periodOption = periodOptions.find(p => p.value === goalData.period);
   const startDate = formatDate(new Date());
   const endDate = getEndDate(startDate, goalData.period);
@@ -24,11 +24,19 @@ export const createGoal = (goalData, periodOptions, setGoals, goals) => {
   };
   
   setGoals([...goals, newGoal]);
+
+  // Create yearly goals from subGoals
+  newGoal.subGoals.forEach((subGoalTitle, index) => {
+    if (subGoalTitle.trim() !== '') {
+      addYearlyGoal(newGoal.id, index, subGoalTitle, setYearlyGoals, yearlyGoals, setMonthlyGoals, monthlyGoals, setWeeklyGoals, weeklyGoals, setDailyTasks, dailyTasks);
+    }
+  });
+
   return newGoal;
 };
 
 // Add yearly goal
-export const addYearlyGoal = (goalId, subGoalIndex, title, setYearlyGoals, yearlyGoals) => {
+export const addYearlyGoal = (goalId, subGoalIndex, title, setYearlyGoals, yearlyGoals, setMonthlyGoals, monthlyGoals, setWeeklyGoals, weeklyGoals, setDailyTasks, dailyTasks) => {
   const newYearlyGoal = {
     id: generateId(),
     goalId: goalId,
@@ -39,12 +47,16 @@ export const addYearlyGoal = (goalId, subGoalIndex, title, setYearlyGoals, yearl
     createdDate: formatDate(new Date())
   };
   
-  setYearlyGoals([...yearlyGoals, newYearlyGoal]);
+  setYearlyGoals(prevYearlyGoals => [...prevYearlyGoals, newYearlyGoal]);
+
+  // Create a default monthly goal for the new yearly goal
+  addMonthlyGoal(newYearlyGoal.id, `${title} (월간 목표)`, setMonthlyGoals, monthlyGoals, setWeeklyGoals, weeklyGoals, setDailyTasks, dailyTasks);
+
   return newYearlyGoal;
 };
 
 // Add monthly goal
-export const addMonthlyGoal = (yearlyGoalId, title, setMonthlyGoals, monthlyGoals) => {
+export const addMonthlyGoal = (yearlyGoalId, title, setMonthlyGoals, monthlyGoals, setWeeklyGoals, weeklyGoals, setDailyTasks, dailyTasks) => {
   const newMonthlyGoal = {
     id: generateId(),
     yearlyGoalId: yearlyGoalId,
@@ -56,11 +68,15 @@ export const addMonthlyGoal = (yearlyGoalId, title, setMonthlyGoals, monthlyGoal
   };
   
   setMonthlyGoals([...monthlyGoals, newMonthlyGoal]);
+
+  // Create a default weekly goal for the new monthly goal
+  addWeeklyGoal(newMonthlyGoal.id, `${title} (주간 목표)`, setWeeklyGoals, weeklyGoals, setDailyTasks, dailyTasks);
+
   return newMonthlyGoal;
 };
 
 // Add weekly goal
-export const addWeeklyGoal = (monthlyGoalId, title, setWeeklyGoals, weeklyGoals) => {
+export const addWeeklyGoal = (monthlyGoalId, title, setWeeklyGoals, weeklyGoals, setDailyTasks, dailyTasks) => {
   const newWeeklyGoal = {
     id: generateId(),
     monthlyGoalId: monthlyGoalId,
@@ -71,6 +87,10 @@ export const addWeeklyGoal = (monthlyGoalId, title, setWeeklyGoals, weeklyGoals)
   };
   
   setWeeklyGoals([...weeklyGoals, newWeeklyGoal]);
+
+  // Create a default daily task for the new weekly goal
+  addDailyTask(newWeeklyGoal.id, `${title} (일일 할일)`, setDailyTasks, dailyTasks);
+
   return newWeeklyGoal;
 };
 

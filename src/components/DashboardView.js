@@ -4,7 +4,7 @@ import { PlusIcon, TargetIcon, CalendarIcon, CheckSquareIcon, PencilIcon, TrashI
 const DashboardView = ({
   setCurrentView, goals, dailyTasks, periodOptions,
   deleteGoal, startEditing, saveEdit, cancelEditing, editingItem, editText, setEditText,
-  setSelectedGoal,
+  setSelectedGoal, setShowGoalGuide,
 }) => {
   return (
     <div className="p-4 space-y-6">
@@ -23,7 +23,7 @@ const DashboardView = ({
       <div className="bg-gradient-to-r from-blue-500 to-purple-600 text-white p-4 rounded-xl shadow-lg">
         <div className="flex justify-between items-start mb-4">
           {/* Goal guide button (commented out, activate if needed) */}
-          <button /* onClick={() => setShowGoalGuide(true)} */ className="text-2xl font-bold hover:text-blue-200 transition-colors">
+          <button onClick={() => setShowGoalGuide(true)} className="text-2xl font-bold hover:text-blue-200 transition-colors">
             2025 목표
           </button>
           <div className="text-right text-sm opacity-90">
